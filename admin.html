@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bushra Hospital Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a73e8;
+            --secondary-color: #f8f9fa;
+            --accent-color: #e8f0fe;
+            --text-color: #202124;
+            --light-text: #5f6368;
+            --border-color: #dadce0;
+            --white: #ffffff;
+            --danger-color: #dc3545;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Hind Siliguri', sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Login Page */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--accent-color);
+        }
+        
+        .login-box {
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background-color: #0d5bba;
+        }
+        
+        /* Admin Dashboard */
+        .admin-header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .logout-btn {
+            background-color: var(--danger-color);
+            padding: 8px 15px;
+            border-radius: 4px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+        
+        /* Sidebar */
+        .admin-container {
+            display: flex;
+            min-height: calc(100vh - 60px);
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: var(--white);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px 0;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-menu li a {
+            display: block;
+            padding: 12px 20px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-menu li a:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+        
+        .sidebar-menu li a.active {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .sidebar-menu li a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            background-color: var(--secondary-color);
+        }
+        
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card h3 {
+            font-size: 16px;
+            color: var(--light-text);
+            margin-bottom: 10px;
+        }
+        
+        .card .count {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .card.appointments .count {
+            color: var(--primary-color);
+        }
+        
+        .card.messages .count {
+            color: var(--warning-color);
+        }
+        
+        .card.doctors .count {
+            color: var(--success-color);
+        }
+        
+        /* Tables */
+        .table-container {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        table th, table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        table th {
+            background-color: var(--accent-color);
+            font-weight: 600;
+        }
+        
+        table tr:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status.pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status.completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        /* Forms */
+        .form-container {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .form-title {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: var(--text-color);
+        }
+        
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+        
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+            
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Bangla Font Support */
+        .bangla {
+            font-family: 'Hind Siliguri', sans-serif;
+        }
+        
+        /* Hidden sections */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="login-page" class="login-container">
+        <div class="login-box">
+            <h2 class="bangla">বুশরা হাসপাতাল অ্যাডমিন লগইন</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email" class="bangla">ইমেইল</label>
+                    <input type="email" id="login-email" class="form-control bangla" placeholder="আপনার ইমেইল লিখুন" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password" class="bangla">পাসওয়ার্ড</label>
+                    <input type="password" id="login-password" class="form-control bangla" placeholder="আপনার পাসওয়ার্ড লিখুন" required>
+                </div>
+                <button type="submit" class="btn bangla">লগইন করুন</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="hidden">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="container header-container">
+                <a href="#" class="logo">Bushra Hospital <span>Admin</span></a>
+                <a href="#" id="logout-btn" class="logout-btn bangla">লগআউট</a>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="admin-container">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <ul class="sidebar-menu">
+                    <li><a href="#" class="active" id="dashboard-link"><i class="fas fa-tachometer-alt"></i> ড্যাশবোর্ড</a></li>
+                    <li><a href="#" id="appointments-link"><i class="fas fa-calendar-check"></i> অ্যাপয়েন্টমেন্ট</a></li>
+                    <li><a href="#" id="messages-link"><i class="fas fa-envelope"></i> বার্তা</a></li>
+                    <li><a href="#" id="doctors-link"><i class="fas fa-user-md"></i> ডাক্তার ব্যবস্থাপনা</a></li>
+                    <li><a href="#" id="categories-link"><i class="fas fa-list-alt"></i> ক্যাটাগরি ব্যবস্থাপনা</a></li>
+                </ul>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="main-content">
+                <!-- Dashboard -->
+                <section id="dashboard-section">
+                    <h2 class="bangla">ড্যাশবোর্ড</h2>
+                    <div class="dashboard-cards">
+                        <div class="card appointments">
+                            <h3 class="bangla">অ্যাপয়েন্টমেন্ট</h3>
+                            <div class="count" id="appointments-count">0</div>
+                        </div>
+                        <div class="card messages">
+                            <h3 class="bangla">বার্তা</h3>
+                            <div class="count" id="messages-count">0</div>
+                        </div>
+                        <div class="card doctors">
+                            <h3 class="bangla">ডাক্তার</h3>
+                            <div class="count" id="doctors-count">0</div>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <h3 class="form-title bangla">সাম্প্রতিক অ্যাপয়েন্টমেন্ট</h3>
+                        <table id="recent-appointments">
+                            <thead>
+                                <tr>
+                                    <th class="bangla">নাম</th>
+                                    <th class="bangla">ডাক্তার</th>
+                                    <th class="bangla">তারিখ</th>
+                                    <th class="bangla">স্ট্যাটাস</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Appointments -->
+                <section id="appointments-section" class="hidden">
+                    <h2 class="bangla">অ্যাপয়েন্টমেন্ট ব্যবস্থাপনা</h2>
+                    
+                    <div class="filters">
+                        <div class="filter-group">
+                            <label for="appointment-date" class="bangla">তারিখ</label>
+                            <input type="date" id="appointment-date" class="form-control">
+                        </div>
+                        <div class="filter-group">
+                            <label for="appointment-doctor" class="bangla">ডাক্তার</label>
+                            <select id="appointment-doctor" class="form-control bangla">
+                                <option value="">সব ডাক্তার</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="appointment-status" class="bangla">স্ট্যাটাস</label>
+                            <select id="appointment-status" class="form-control bangla">
+                                <option value="">সব স্ট্যাটাস</option>
+                                <option value="pending">পেন্ডিং</option>
+                                <option value="completed">সম্পন্ন</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <button id="filter-appointments" class="btn btn-sm bangla" style="margin-top: 22px;">ফিল্টার</button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="appointments-table">
+                            <thead>
+                                <tr>
+                                    <th class="bangla">নাম</th>
+                                    <th class="bangla">বয়স</th>
+                                    <th class="bangla">ডাক্তার</th>
+                                    <th class="bangla">ক্যাটাগরি</th>
+                                    <th class="bangla">তারিখ</th>
+                                    <th class="bangla">স্ট্যাটাস</th>
+                                    <th class="bangla">অ্যাকশন</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Messages -->
+                <section id="messages-section" class="hidden">
+                    <h2 class="bangla">বার্তা ব্যবস্থাপনা</h2>
+                    
+                    <div class="filters">
+                        <div class="filter-group">
+                            <label for="message-date" class="bangla">তারিখ</label>
+                            <input type="date" id="message-date" class="form-control">
+                        </div>
+                        <div class="filter-group">
+                            <label for="message-status" class="bangla">স্ট্যাটাস</label>
+                            <select id="message-status" class="form-control bangla">
+                                <option value="">সব স্ট্যাটাস</option>
+                                <option value="unread">অপঠিত</option>
+                                <option value="read">পঠিত</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <button id="filter-messages" class="btn btn-sm bangla" style="margin-top: 22px;">ফিল্টার</button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="messages-table">
+                            <thead>
+                                <tr>
+                                    <th class="bangla">নাম</th>
+                                    <th class="bangla">মোবাইল</th>
+                                    <th class="bangla">বার্তা</th>
+                                    <th class="bangla">তারিখ</th>
+                                    <th class="bangla">স্ট্যাটাস</th>
+                                    <th class="bangla">অ্যাকশন</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Doctors Management -->
+                <section id="doctors-section" class="hidden">
+                    <h2 class="bangla">ডাক্তার ব্যবস্থাপনা</h2>
+                    
+                    <div class="form-container">
+                        <h3 class="form-title bangla">নতুন ডাক্তার যোগ করুন</h3>
+                        <form id="doctor-form">
+                            <div class="form-group">
+                                <label for="doctor-name" class="bangla">ডাক্তারের নাম</label>
+                                <input type="text" id="doctor-name" class="form-control bangla" placeholder="ডাক্তারের নাম লিখুন" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="doctor-specialty" class="bangla">বিশেষতা</label>
+                                <input type="text" id="doctor-specialty" class="form-control bangla" placeholder="ডাক্তারের বিশেষতা লিখুন" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="doctor-bio" class="bangla">বায়ো</label>
+                                <textarea id="doctor-bio" class="form-control bangla" placeholder="ডাক্তারের সংক্ষিপ্ত বায়ো লিখুন" rows="3" required></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="doctor-image" class="bangla">ছবি (URL)</label>
+                                <input type="text" id="doctor-image" class="form-control bangla" placeholder="ছবির URL লিখুন">
+                            </div>
+                            
+                            <button type="submit" class="btn bangla" id="save-doctor">সংরক্ষণ করুন</button>
+                            <input type="hidden" id="edit-doctor-id" value="">
+                        </form>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="doctors-table">
+                            <thead>
+                                <tr>
+                                    <th class="bangla">নাম</th>
+                                    <th class="bangla">বিশেষতা</th>
+                                    <th class="bangla">অ্যাকশন</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Categories Management -->
+                <section id="categories-section" class="hidden">
+                    <h2 class="bangla">ক্যাটাগরি ব্যবস্থাপনা</h2>
+                    
+                    <div class="form-container">
+                        <h3 class="form-title bangla">নতুন ক্যাটাগরি যোগ করুন</h3>
+                        <form id="category-form">
+                            <div class="form-group">
+                                <label for="category-name" class="bangla">ক্যাটাগরি নাম</label>
+                                <input type="text" id="category-name" class="form-control bangla" placeholder="ক্যাটাগরি নাম লিখুন" required>
+                            </div>
+                            
+                            <button type="submit" class="btn bangla" id="save-category">সংরক্ষণ করুন</button>
+                            <input type="hidden" id="edit-category-id" value="">
+                        </form>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="categories-table">
+                            <thead>
+                                <tr>
+                                    <th class="bangla">নাম</th>
+                                    <th class="bangla">অ্যাকশন</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1fzdObawTdYIHM08W-afB_ZjEh39Z8L0",
+            authDomain: "apps-on-bot.firebaseapp.com",
+            projectId: "apps-on-bot",
+            storageBucket: "apps-on-bot.appspot.com",
+            messagingSenderId: "193541357633",
+            appId: "1:193541357633:web:fffcee8a7ac95273f006c0",
+            measurementId: "G-BL5CPFEF2W"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        // Admin credentials (in a real app, these would be stored securely)
+        const ADMIN_EMAIL = "admin@bushrahospital.com";
+        const ADMIN_PASSWORD = "BushraHospital123";
+
+        // DOM Elements
+        const loginPage = document.getElementById('login-page');
+        const adminDashboard = document.getElementById('admin-dashboard');
+        const loginForm = document.getElementById('login-form');
+        const logoutBtn = document.getElementById('logout-btn');
+        
+        // Navigation Links
+        const dashboardLink = document.getElementById('dashboard-link');
+        const appointmentsLink = document.getElementById('appointments-link');
+        const messagesLink = document.getElementById('messages-link');
+        const doctorsLink = document.getElementById('doctors-link');
+        const categoriesLink = document.getElementById('categories-link');
+        
+        // Sections
+        const dashboardSection = document.getElementById('dashboard-section');
+        const appointmentsSection = document.getElementById('appointments-section');
+        const messagesSection = document.getElementById('messages-section');
+        const doctorsSection = document.getElementById('doctors-section');
+        const categoriesSection = document.getElementById('categories-section');
+        
+        // Check authentication state
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in
+                loginPage.classList.add('hidden');
+                adminDashboard.classList.remove('hidden');
+                showSection('dashboard');
+                loadDashboardData();
+            } else {
+                // No user is signed in
+                loginPage.classList.remove('hidden');
+                adminDashboard.classList.add('hidden');
+            }
+        });
+
+        // Login Form Submission
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Simple validation (in a real app, use proper validation)
+            if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+                auth.signInWithEmailAndPassword(email, password)
+                    .then(() => {
+                        // Login successful
+                        loginForm.reset();
+                    })
+                    .catch((error) => {
+                        alert('Login error: ' + error.message);
+                    });
+            } else {
+                alert('Invalid email or password');
+            }
+        });
+
+        // Logout
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            auth.signOut();
+        });
+
+        // Navigation
+        function showSection(section) {
+            // Hide all sections
+            dashboardSection.classList.add('hidden');
+            appointmentsSection.classList.add('hidden');
+            messagesSection.classList.add('hidden');
+            doctorsSection.classList.add('hidden');
+            categoriesSection.classList.add('hidden');
+            
+            // Remove active class from all links
+            dashboardLink.classList.remove('active');
+            appointmentsLink.classList.remove('active');
+            messagesLink.classList.remove('active');
+            doctorsLink.classList.remove('active');
+            categoriesLink.classList.remove('active');
+            
+            // Show selected section and set active link
+            switch(section) {
+                case 'dashboard':
+                    dashboardSection.classList.remove('hidden');
+                    dashboardLink.classList.add('active');
+                    loadDashboardData();
+                    break;
+                case 'appointments':
+                    appointmentsSection.classList.remove('hidden');
+                    appointmentsLink.classList.add('active');
+                    loadAppointments();
+                    break;
+                case 'messages':
+                    messagesSection.classList.remove('hidden');
+                    messagesLink.classList.add('active');
+                    loadMessages();
+                    break;
+                case 'doctors':
+                    doctorsSection.classList.remove('hidden');
+                    doctorsLink.classList.add('active');
+                    loadDoctors();
+                    break;
+                case 'categories':
+                    categoriesSection.classList.remove('hidden');
+                    categoriesLink.classList.add('active');
+                    loadCategories();
+                    break;
+            }
+        }
+
+        // Navigation event listeners
+        dashboardLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection('dashboard');
+        });
+
+        appointmentsLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection('appointments');
+        });
+
+        messagesLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection('messages');
+        });
+
+        doctorsLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection('doctors');
+        });
+
+        categoriesLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection('categories');
+        });
+
+        // Dashboard Functions
+        function loadDashboardData() {
+            // Load counts
+            db.collection('appointments').get().then((snapshot) => {
+                document.getElementById('appointments-count').textContent = snapshot.size;
+            });
+            
+            db.collection('messages').get().then((snapshot) => {
+                document.getElementById('messages-count').textContent = snapshot.size;
+            });
+            
+            db.collection('doctors').get().then((snapshot) => {
+                document.getElementById('doctors-count').textContent = snapshot.size;
+            });
+            
+            // Load recent appointments
+            db.collection('appointments')
+                .orderBy('timestamp', 'desc')
+                .limit(5)
+                .get()
+                .then((querySnapshot) => {
+                    const tbody = document.querySelector('#recent-appointments tbody');
+                    tbody.innerHTML = '';
+                    
+                    querySnapshot.forEach((doc) => {
+                        const appointment = doc.data();
+                        const date = appointment.timestamp ? appointment.timestamp.toDate().toLocaleDateString() : 'N/A';
+                        
+                        const row = `
+                            <tr>
+                                <td class="bangla">${appointment.name}</td>
+                                <td class="bangla">${appointment.doctor}</td>
+                                <td class="bangla">${date}</td>
+                                <td><span class="status ${appointment.status || 'pending'} bangla">${appointment.status === 'completed' ? 'সম্পন্ন' : 'পেন্ডিং'}</span></td>
+                            </tr>
+                        `;
+                        
+                        tbody.innerHTML += row;
+                    });
+                });
+        }
+
+        // Appointments Management
+        function loadAppointments(filters = {}) {
+            let query = db.collection('appointments').orderBy('timestamp', 'desc');
+            
+            // Apply filters
+            if (filters.date) {
+                const startDate = new Date(filters.date);
+                startDate.setHours(0, 0, 0, 0);
+                
+                const endDate = new Date(filters.date);
+                endDate.setHours(23, 59, 59, 999);
+                
+                query = query.where('timestamp', '>=', startDate)
+                            .where('timestamp', '<=', endDate);
+            }
+            
+            if (filters.doctor) {
+                query = query.where('doctor', '==', filters.doctor);
+            }
+            
+            if (filters.status) {
+                query = query.where('status', '==', filters.status);
+            }
+            
+            query.get().then((querySnapshot) => {
+                const tbody = document.querySelector('#appointments-table tbody');
+                tbody.innerHTML = '';
+                
+                // Load doctors for filter dropdown
+                loadDoctorsForFilter();
+                
+                querySnapshot.forEach((doc) => {
+                    const appointment = doc.data();
+                    const date = appointment.timestamp ? appointment.timestamp.toDate().toLocaleDateString() : 'N/A';
+                    
+                    const row = `
+                        <tr>
+                            <td class="bangla">${appointment.name}</td>
+                            <td class="bangla">${appointment.age}</td>
+                            <td class="bangla">${appointment.doctor}</td>
+                            <td class="bangla">${appointment.category}</td>
+                            <td class="bangla">${date}</td>
+                            <td><span class="status ${appointment.status || 'pending'} bangla">${appointment.status === 'completed' ? 'সম্পন্ন' : 'পেন্ডিং'}</span></td>
+                            <td>
+                                <button class="btn btn-sm ${appointment.status === 'completed' ? 'btn-warning' : 'btn-success'} bangla complete-btn" data-id="${doc.id}">
+                                    ${appointment.status === 'completed' ? 'পেন্ডিং করুন' : 'সম্পন্ন করুন'}
+                                </button>
+                                <button class="btn btn-sm btn-danger bangla delete-btn" data-id="${doc.id}">ডিলিট</button>
+                            </td>
+                        </tr>
+                    `;
+                    
+                    tbody.innerHTML += row;
+                });
+                
+                // Add event listeners to buttons
+                document.querySelectorAll('.complete-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.getAttribute('data-id');
+                        toggleAppointmentStatus(id);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.getAttribute('data-id');
+                        deleteAppointment(id);
+                    });
+                });
+            });
+        }
+        
+        function loadDoctorsForFilter() {
+            const select = document.getElementById('appointment-doctor');
+            select.innerHTML = '<option value="">সব ডাক্তার</option>';
+            
+            db.collection('doctors').get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    const doctor = doc.data();
+                    const option = document.createElement('option');
+                    option.value = doctor.name;
+                    option.textContent = doctor.name;
+                    select.appendChild(option);
+                });
+            });
+        }
+        
+        function toggleAppointmentStatus(id) {
+            const docRef = db.collection('appointments').doc(id);
+            
+            docRef.get().then((doc) => {
+                if (doc.exists) {
+                    const currentStatus = doc.data().status || 'pending';
+                    const newStatus = currentStatus === 'pending' ? 'completed' : 'pending';
+                    
+                    docRef.update({ status: newStatus })
+                        .then(() => {
+                            loadAppointments();
+                        });
+                }
+            });
+        }
+        
+        function deleteAppointment(id) {
+            if (confirm('আপনি কি নিশ্চিত এই অ্যাপয়েন্টমেন্ট ডিলিট করতে চান?')) {
+                db.collection('appointments').doc(id).delete()
+                    .then(() => {
+                        loadAppointments();
+                    });
+            }
+        }
+        
+        // Filter appointments
+        document.getElementById('filter-appointments').addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            const filters = {
+                date: document.getElementById('appointment-date').value,
+                doctor: document.getElementById('appointment-doctor').value,
+                status: document.getElementById('appointment-status').value
+            };
+            
+            loadAppointments(filters);
+        });
+
+        // Messages Management
+        function loadMessages(filters = {}) {
+            let query = db.collection('messages').orderBy('timestamp', 'desc');
+            
+            // Apply filters
+            if (filters.date) {
+                const startDate = new Date(filters.date);
+                startDate.setHours(0, 0, 0, 0);
+                
+                const endDate = new Date(filters.date);
+                endDate.setHours(23, 59, 59, 999);
+                
+                query = query.where('timestamp', '>=', startDate)
+                            .where('timestamp', '<=', endDate);
+            }
+            
+            if (filters.status) {
+                query = query.where('status', '==', filters.status);
+            }
+            
+            query.get().then((querySnapshot) => {
+                const tbody = document.querySelector('#messages-table tbody');
+                tbody.innerHTML = '';
+                
+                querySnapshot.forEach((doc) => {
+                    const message = doc.data();
+                    const date = message.timestamp ? message.timestamp.toDate().toLocaleDateString() : 'N/A';
+                    
+                    const row = `
+                        <tr>
+                            <td class="bangla">${message.name}</td>
+                            <td class="bangla">${message.mobile}</td>
+                            <td class="bangla">${message.message.substring(0, 50)}${message.message.length > 50 ? '...' : ''}</td>
+                            <td class="bangla">${date}</td>
+                            <td><span class="status ${message.status || 'unread'} bangla">${message.status === 'read' ? 'পঠিত' : 'অপঠিত'}</span></td>
+                            <td>
+                                <button class="btn btn-sm ${message.status === 'read' ? 'btn-warning' : 'btn-success'} bangla read-btn" data-id="${doc.id}">
+                                    ${message.status === 'read' ? 'অপঠিত করুন' : 'পঠিত করুন'}
+                                </button>
+                                <button class="btn btn-sm btn-danger bangla delete-btn" data-id="${doc.id}">ডিলিট</button>
+                            </td>
+                        </tr>
+                    `;
+                    
+                    tbody.innerHTML += row;
+                });
+                
+                // Add event listeners to buttons
+                document.querySelectorAll('.read-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.getAttribute('data-id');
+                        toggleMessageStatus(id);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.getAttribute('data-id');
+                        deleteMessage(id);
+                    });
+                });
+            });
+        }
+        
+        function toggleMessageStatus(id) {
+            const docRef = db.collection('messages').doc(id);
+            
+            docRef.get().then((doc) => {
+                if (doc.exists) {
+                    const currentStatus = doc.data().status || 'unread';
+                    const newStatus = currentStatus === 'unread' ? 'read' : 'unread';
+                    
+                    docRef.update({ status: newStatus })
+                        .then(() => {
+                            loadMessages();
+                        });
+                }
+            });
+        }
+        
+        function deleteMessage(id) {
+            if (confirm('আপনি কি নিশ্চিত এই বার্তা ডিলিট করতে চান?')) {
+                db.collection('messages').doc(id).delete()
+                    .then(() => {
+                        loadMessages();
+                    });
+            }
+        }
+        
+        // Filter messages
+        document.getElementById('filter-messages').addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            const filters = {
+                date: document.getElementById('message-date').value,
+                status: document.getElementById('message-status').value
+            };
+            
+            loadMessages(filters);
+        });
+
+        // Doctors Management
+        function loadDoctors() {
+            db.collection('doctors').orderBy('name').get().then((querySnapshot) => {
+                const tbody = document.querySelector('#doctors-table tbody');
+                tbody.innerHTML = '';
+                
+                querySnapshot.forEach((doc) => {
+                    const doctor = doc.data();
+                    
+                    const row = `
+                        <tr>
+                            <td class="bangla">${doctor.name}</td>
+                            <td class="bangla">${doctor.specialty}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning bangla edit-btn" data-id="${doc.id}">এডিট</button>
+                                <button class="btn btn-sm btn-danger bangla delete-btn" data-id="${doc.id}">ডিলিট</button>
+                            </td>
+                        </tr>
+                    `;
+                    
+                    tbody.innerHTML += row;
+                });
+                
+                // Add event listeners to buttons
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.getAttribute('data-id');
+                        editDoctor(id);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.getAttribute('data-id');
+                        deleteDoctor(id);
+                    });
+                });
+            });
+        }
+        
+        function editDoctor(id) {
+            db.collection('doctors').doc(id).get().then((doc) => {
+                if (doc.exists) {
+                    const doctor = doc.data();
+                    
+                    document.getElementById('doctor-name').value = doctor.name;
+                    document.getElementById('doctor-specialty').value = doctor.specialty;
+                    document.getElementById('doctor-bio').value = doctor.bio;
+                    document.getElementById('doctor-image').value = doctor.image || '';
+                    document.getElementById('edit-doctor-id').value = id;
+                    
+                    document.getElementById('save-doctor').textContent = 'আপডেট করুন';
+                    
+                    // Scroll to form
+                    document.getElementById('doctor-form').scrollIntoView();
+                }
+            });
+        }
+        
+        function deleteDoctor(id) {
+            if (confirm('আপনি কি নিশ্চিত এই ডাক্তার ডিলিট করতে চান?')) {
+                db.collection('doctors').doc(id).delete()
+                    .then(() => {
+                        loadDoctors();
+                    });
+            }
+        }
+        
+        // Doctor Form Submission
+        document.getElementById('doctor-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('doctor-name').value;
+            const specialty = document.getElementById('doctor-specialty').value;
+            const bio = document.getElementById('doctor-bio').value;
+            const image = document.getElementById('doctor-image').value;
+            const id = document.getElementById('edit-doctor-id').value;
+            
+            const doctorData = {
+                name: name,
+                specialty: specialty,
+                bio: bio,
+                image: image || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80'
+            };
+            
+            if (id) {
+                // Update existing doctor
+                db.collection('doctors').doc(id).update(doctorData)
+                    .then(() => {
+                        alert('ডাক্তার সফলভাবে আপডেট করা হয়েছে!');
+                        document.getElementById('doctor-form').reset();
+                        document.getElementById('edit-doctor-id').value = '';
+                        document.getElementById('save-doctor').textContent = 'সংরক্ষণ করুন';
+                        loadDoctors();
+                    });
+            } else {
+                // Add new doctor
+                db.collection('doctors').add(doctorData)
+                    .then(() => {
+                        alert('ডাক্তার সফলভাবে যোগ করা হয়েছে!');
+                        document.getElementById('doctor-form').reset();
+                        loadDoctors();
+                    });
+            }
+        });
+
+        // Categories Management
+        function loadCategories() {
+            db.collection('categories').orderBy('name').get().then((querySnapshot) => {
+                const tbody = document.querySelector('#categories-table tbody');
+                tbody.innerHTML = '';
+                
+                querySnapshot.forEach((doc) => {
+                    const category = doc.data();
+                    
+                    const row = `
+                        <tr>
+                            <td class="bangla">${category.name}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning bangla edit-btn" data-id="${doc.id}">এডিট</button>
+                                <button class="btn btn-sm btn-danger bangla delete-btn" data-id="${doc.id}">ডিলিট</button>
+                            </td>
+                        </tr>
+                    `;
+                    
+                    tbody.innerHTML += row;
+                });
+                
+                // Add event listeners to buttons
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.getAttribute('data-id');
+                        editCategory(id);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.getAttribute('data-id');
+                        deleteCategory(id);
+                    });
+                });
+            });
+        }
+        
+        function editCategory(id) {
+            db.collection('categories').doc(id).get().then((doc) => {
+                if (doc.exists) {
+                    const category = doc.data();
+                    
+                    document.getElementById('category-name').value = category.name;
+                    document.getElementById('edit-category-id').value = id;
+                    
+                    document.getElementById('save-category').textContent = 'আপডেট করুন';
+                    
+                    // Scroll to form
+                    document.getElementById('category-form').scrollIntoView();
+                }
+            });
+        }
+        
+        function deleteCategory(id) {
+            if (confirm('আপনি কি নিশ্চিত এই ক্যাটাগরি ডিলিট করতে চান?')) {
+                db.collection('categories').doc(id).delete()
+                    .then(() => {
+                        loadCategories();
+                    });
+            }
+        }
+        
+        // Category Form Submission
+        document.getElementById('category-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('category-name').value;
+            const id = document.getElementById('edit-category-id').value;
+            
+            if (id) {
+                // Update existing category
+                db.collection('categories').doc(id).update({ name: name })
+                    .then(() => {
+                        alert('ক্যাটাগরি সফলভাবে আপডেট করা হয়েছে!');
+                        document.getElementById('category-form').reset();
+                        document.getElementById('edit-category-id').value = '';
+                        document.getElementById('save-category').textContent = 'সংরক্ষণ করুন';
+                        loadCategories();
+                    });
+            } else {
+                // Add new category
+                db.collection('categories').add({ name: name })
+                    .then(() => {
+                        alert('ক্যাটাগরি সফলভাবে যোগ করা হয়েছে!');
+                        document.getElementById('category-form').reset();
+                        loadCategories();
+                    });
+            }
+        });
+    </script>
+</body>
+</html>
